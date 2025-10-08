@@ -24,6 +24,7 @@
   core
   angstrom
   (ocaml-lsp-server :dev)
+  (merlin :dev)
   (ocamlformat :dev))
  (tags
   ("add topics" "to describe" your project)))

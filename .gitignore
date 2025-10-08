@@ -15,9 +15,8 @@
 /dune.lock/
 /vendor/
 /dune-deps/
-/dev-tools.lock/
-/dev-tools.lock/
-/dev-tools.lockdir/
+/dev-tools.locks/
+/dev-tools.locks/*
 
 #----------------------------------------------
 # OPAM and local switches

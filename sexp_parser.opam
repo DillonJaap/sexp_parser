@@ -15,6 +15,7 @@ depends: [
   "core"
   "angstrom"
   "ocaml-lsp-server" {dev}
+  "merlin" {dev}
   "ocamlformat" {dev}
   "odoc" {with-doc}
 ]
