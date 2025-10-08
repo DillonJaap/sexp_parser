@@ -1,0 +1,4 @@
+(executable
+ (public_name sexp_parser)
+ (name main)
+ (libraries sexp_parser angstrom core))

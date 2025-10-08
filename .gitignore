@@ -1,25 +1,47 @@
+#----------------------------------------------
 # Dune build artifacts
+#----------------------------------------------
 /_build/
 /_build/*
 *.install
 
-# Dune sandbox and cache
+# Dune’s sandbox, cache, and configuration
 /.dune
 /.dune-config
 /.dune-build*
+/.dune-cache
 
-# OPAM local switch or sandbox
+# Dune lockfiles and vendored dependencies
+/dune.lock/
+/vendor/
+/dune-deps/
+/dev-tools.lock/
+/dev-tools.lock/
+/dev-tools.lockdir/
+
+#----------------------------------------------
+# OPAM and local switches
+#----------------------------------------------
 /_opam/
 /.opam-switch/
 /opam-root/
+.opam
 
-# Generated docs or coverage reports
+#----------------------------------------------
+# Generated docs, reports, and dev files
+#----------------------------------------------
 /docs/
 /doc/
 /coverage/
 /_coverage/
+/test/tmp/
+/tmp/
+/*.out
+/*.err
 
-# Editor-specific / OS-specific files
+#----------------------------------------------
+# Editor / tooling junk
+#----------------------------------------------
 *.swp
 *.swo
 *.cache
@@ -28,24 +50,18 @@
 *.bak
 *.DS_Store
 *~
-
-# Merlin / Editor tooling
 /.merlin
 /.merlin-examples
 
-# Bytecode / compiled outputs (if manually built)
+#----------------------------------------------
+# Compiled OCaml object/interface files
+#----------------------------------------------
+*.cmi
 *.cmo
 *.cma
 *.cmx
 *.cmxa
-*.cmi
-*.o
-*.a
 *.cmxs
 *.annot
-
-# Test results or temporary files
-/test/tmp/
-/tmp/
-/*.out
-/*.err
+*.o
+*.a
