@@ -1,0 +1,51 @@
+# Dune build artifacts
+/_build/
+/_build/*
+*.install
+
+# Dune sandbox and cache
+/.dune
+/.dune-config
+/.dune-build*
+
+# OPAM local switch or sandbox
+/_opam/
+/.opam-switch/
+/opam-root/
+
+# Generated docs or coverage reports
+/docs/
+/doc/
+/coverage/
+/_coverage/
+
+# Editor-specific / OS-specific files
+*.swp
+*.swo
+*.cache
+*.log
+*.tmp
+*.bak
+*.DS_Store
+*~
+
+# Merlin / Editor tooling
+/.merlin
+/.merlin-examples
+
+# Bytecode / compiled outputs (if manually built)
+*.cmo
+*.cma
+*.cmx
+*.cmxa
+*.cmi
+*.o
+*.a
+*.cmxs
+*.annot
+
+# Test results or temporary files
+/test/tmp/
+/tmp/
+/*.out
+/*.err
