@@ -37,6 +37,7 @@ let number =
   <?> "number"
 ;;
 
+let _symbol = string
 let sexp_parser = number
 
 let () =
