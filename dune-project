@@ -25,7 +25,8 @@
   angstrom
   (ocaml-lsp-server :dev)
   (merlin :dev)
-  (ocamlformat :dev))
+  (ocamlformat :dev)
+  (ppx_deriving :build))
  (tags
   ("add topics" "to describe" your project)))
 

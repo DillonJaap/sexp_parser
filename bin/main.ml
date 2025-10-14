@@ -10,15 +10,15 @@
 open Base
 open Angstrom
 
+type node =
+  | Number of string
+  | Symbol of string
+[@@deriving show]
+
 let is_digit = function
   | '0' .. '9' -> true
   | _ -> false
 ;;
-
-(* let is_non_zero = function *)
-(*   | '1' .. '9' -> true *)
-(*   | _ -> false *)
-(* ;; *)
 
 let number =
   let* sign = option "" (string "-") in
@@ -32,18 +32,22 @@ let number =
   in
   return
     (match sign ^ int_part ^ decimal_part with
-     | s when String.is_prefix s ~prefix:"." -> "0" ^ s
-     | s -> s)
+     | s when String.is_prefix s ~prefix:"." -> Number ("0" ^ s)
+     | s -> Number s)
   <?> "number"
 ;;
 
-let _symbol = string
-let sexp_parser = number
+let symbol =
+  (take_till @@ fun ch -> Char.is_whitespace ch)
+  >>| fun str -> Symbol str
+;;
+
+let sexp_parser = choice [ number; symbol ]
 
 let () =
   let open Stdlib.Printf in
   let input = ".1" in
   match parse_string ~consume:All sexp_parser input with
-  | Ok result -> printf "%s" result
+  | Ok result -> printf "%s" (show_node result)
   | Error msg -> printf "%s" msg
 ;;

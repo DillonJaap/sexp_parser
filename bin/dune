@@ -1,4 +1,6 @@
 (executable
  (public_name sexp_parser)
  (name main)
- (libraries sexp_parser angstrom core))
+ (libraries sexp_parser angstrom core)
+ (preprocess
+  (pps ppx_deriving.show)))
