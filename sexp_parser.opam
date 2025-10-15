@@ -17,6 +17,7 @@ depends: [
   "ocaml-lsp-server" {dev}
   "merlin" {dev}
   "ocamlformat" {dev}
+  "ppx_deriving" {build}
   "odoc" {with-doc}
 ]
 build: [

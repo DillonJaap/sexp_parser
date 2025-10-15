@@ -7,12 +7,14 @@
   number ::= /-?[0-9][1-9]*(\.[0-9]+)?/
 *)
 
+(* TODO: dot notation *)
 open Base
 open Angstrom
 
-type node =
+type sexpr =
   | Number of string
   | Symbol of string
+  | List of sexpr list
 [@@deriving show]
 
 let is_digit = function
@@ -42,12 +44,33 @@ let symbol =
   >>| fun str -> Symbol str
 ;;
 
-let sexp_parser = choice [ number; symbol ]
+let sexp =
+  fix (fun sexp ->
+    let list_rest =
+      fix (fun list_rest ->
+        choice
+          [ (* end of list *)
+            char ')' *> return []
+          ; (* recursive list elements *)
+            (let* x = sexp in
+             let* xs = list_rest in
+             return (x :: xs))
+          ])
+    in
+    let list = char '(' *> list_rest >>| fun xs -> List xs in
+    choice [ number; symbol; list ])
+;;
+
+(* choice *)
+(*   [ char ')' *> List [] *)
+(*   ; List (char '.' *> sexp <* char ')') *)
+(*   ; List (List.append sexp list_rest) *)
+(*   ] *)
 
 let () =
   let open Stdlib.Printf in
   let input = ".1" in
-  match parse_string ~consume:All sexp_parser input with
-  | Ok result -> printf "%s" (show_node result)
+  match parse_string ~consume:All sexp input with
+  | Ok result -> printf "%s" (show_sexpr result)
   | Error msg -> printf "%s" msg
 ;;
