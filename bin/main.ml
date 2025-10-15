@@ -56,7 +56,7 @@ let symbol =
 ;;
 
 (* -------------------------------------------------------------------------- *)
-(* Recursive S-expression grammar *)
+(* S-expression Parser *)
 (* -------------------------------------------------------------------------- *)
 let sexp : sexpr Angstrom.t =
   fix (fun sexp ->
