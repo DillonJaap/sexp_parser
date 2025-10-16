@@ -13,9 +13,9 @@ let pratt = function
   | Add | Subtract -> 0
 ;;
 
-type expr =
+type token =
   | Number of string
-  | Operation of operator * expr * expr
+  | Operator of operator
   | Paren
 [@@deriving show]
 
@@ -30,7 +30,7 @@ let ws =
     | _ -> false)
 ;;
 
-let token p = ws *> p <* ws
+let get_token p = ws *> p <* ws
 
 (* number parser *)
 let number =
@@ -45,10 +45,9 @@ let number =
   return (Number (sign ^ int_part ^ decimal_part)) <?> "number"
 ;;
 
-let operation expr =
-  let* lvalue = expr in
-  let* op =
-    token
+let operation =
+  let* tk =
+    get_token
     @@ choice
          [ char '+' *> return Add
          ; char '*' *> return Multiply
@@ -56,14 +55,14 @@ let operation expr =
          ; char '/' *> return Divide
          ]
   in
-  let* rvalue = expr in
-  return @@ Operation (op, lvalue, rvalue)
+  return (Operator tk)
 ;;
 
-let expr = fix @@ fun expr -> choice [ number; operation expr ]
+let expr = many @@ choice [ number; operation ]
 
 let parse_and_print input =
   match parse_string ~consume:All expr input with
-  | Ok result -> Stdio.printf "Parsed: %s\n%!" (show_expr result)
+  | Ok result ->
+    Stdio.printf "Parsed: %s\n%!" (show_token result)
   | Error msg -> Stdio.printf "Error: %s\n%!" msg
 ;;
