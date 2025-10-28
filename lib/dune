@@ -1,6 +1,6 @@
 (library
  (name lib)
- (modules sexpr math)
+ (modules sexpr math_parser math_lexer)
  (libraries angstrom core)
  (preprocess
   (pps ppx_deriving.show)))

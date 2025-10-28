@@ -8,16 +8,22 @@ type operator =
   | Divide
 [@@deriving show]
 
-let pratt = function
-  | Multiply | Divide -> 1
-  | Add | Subtract -> 0
-;;
-
 type token =
   | Number of string
   | Operator of operator
   | Paren
+  | EOF
 [@@deriving show]
+
+let binding_power = function
+  | Operator o ->
+    (match o with
+     | Multiply | Divide -> 2
+     | Add | Subtract -> 1)
+  | Paren -> 3
+  | Number _ -> 0
+  | EOF -> 0
+;;
 
 let is_digit = function
   | '0' .. '9' -> true
@@ -63,6 +69,16 @@ let expr = many @@ choice [ number; operation ]
 let parse_and_print input =
   match parse_string ~consume:All expr input with
   | Ok result ->
-    Stdio.printf "Parsed: %s\n%!" (show_token result)
+    List.iter result ~f:(fun t ->
+      Stdio.printf "Parsed: %s\n%!" (show_token t))
   | Error msg -> Stdio.printf "Error: %s\n%!" msg
+;;
+
+type lexer = token list
+
+let advance lxr =
+  let new_lxr : lexer =
+    List.tl lxr |> Option.value ~default:[]
+  in
+  List.hd lxr |> Option.value ~default:EOF, new_lxr
 ;;
